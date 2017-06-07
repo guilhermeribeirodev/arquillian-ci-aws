@@ -16,6 +16,7 @@
     </dependency>
   </dependencies>
 
+<profiles>
   <profile>
     <id>wildfy81-embedded</id>
     <!-- the dependencies for Wildfly8.1  -->
@@ -80,4 +81,6 @@
     </plugins>
   </build>
 </profile>
+</profiles>
+  
 </project>
