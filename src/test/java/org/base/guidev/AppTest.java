@@ -1,38 +1,29 @@
 package org.base.guidev;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
-    }
+import javax.ejb.EJB;
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
+@RunWith(Arquillian.class)
+public class AppTest{
+        @Deployment(testable = false)
+        public static WebArchive createDeployment() {
+            return ShrinkWrap.create(WebArchive.class, "test.war")
+                    .addClasses(MyService.class)
+                    .addAsResource("test-persistence.xml", "META-INF/persistence.xml");
+        }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
-    }
+        @EJB
+        MyService myService;
+
+        @Test
+        public void test(){
+            System.out.println(myService.method());
+        }
+
 }
